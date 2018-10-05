@@ -1,0 +1,102 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    Teste: {{ main.urlBase }}<br>
+    {% for user in users %}
+        {{ user.name }}
+        {{ user.cpf }}<br>
+    {% endfor %}
+
+    <br>ip: {{ ip }}
+    <br>sessão: {{ session }}
+    <br>Nome: {{ main.sessionLogin.userName }}
+    <br>Tipo: {{ main.sessionLogin.userType }}
+    <br>idPerson: {{ main.sessionLogin.idPerson }}
+    <br>idUser: {{ main.sessionLogin.idUser }}
+    <br>idCorporation: {{ main.sessionLogin.idCorporation }}
+
+    <div class="container-limit">
+        {% if state %}
+            <span class="font-m">Recuperação de Senha</span><br>
+            <span class="font-p">Você está redefinindo sua Senha</span><br>
+        {% else %}
+            <span class="font-m">Recuperar Senha</span><br>
+            <span class="font-p">Se você esqueceu sua Senha, recupere usando seu E-mail</span><br>
+        {% endif %}
+    </div>
+
+    <div class="container-fluid newsletter mt-1 mb-1">
+        <div class="container-limit">
+            <form action="recuperar-senha" method="post">
+                {% if state %}
+                    <br><span class="text-light"><b>Digite sua nova Senha</b></span>
+
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                {% if error.password is not empty %}
+                                    <div class="alert alert-danger no-space-bottoms" role="alert">
+                                        {{ error.password }}
+                                    </div>
+                                {% elseif error.passwordConfirm is not empty %}
+                                    <div class="alert alert-danger no-space-bottoms" role="alert">
+                                        {{ error.passwordConfirm }}
+                                    </div>
+                                {% endif %}
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="password" class="text-light no-space-bottom">Senha:</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">lock</i></span>
+                                            </div>
+                                            <input type="password" id="password" name="password" class="form-control" placeholder="Escolha sua Senha" title="Digite uma Senha">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="password_confirm" class="text-light no-space-bottom">Confirmar Senha:</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">lock</i></span>
+                                            </div>
+                                            <input type="password" id="password_confirm" name="password_confirm" class="form-control" placeholder="Confirme sua Senha" title="Confirme sua Senha">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <br><span class="text-light"><b>Digite seu E-mail para redefinir sua Senha</b></span>
+
+                    <div class="form-group">
+                        {% if error.password is not empty %}
+                            <div class="alert alert-danger no-space-bottom" role="alert">
+                                {{ error.password }}
+                            </div>
+                        {% endif %}
+
+                        <label for="email" class="text-light no-space-bottom">E-mail:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons" title="Digite seu E-mail">mail</i></span>
+                            </div>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Seu E-mail" title="Digite seu E-mail">
+                        </div>
+                    </div>
+                {% endif %}
+
+
+                <button type="submit" class="btn btn-info no-space-top mb-3 mt-2" title="Enviar Cadastro">&nbsp;
+                    {% if state %}
+                        Alterar&nbsp;
+                    {% else %}
+                        Entrar&nbsp;
+                    {% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

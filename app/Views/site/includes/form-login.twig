@@ -1,0 +1,31 @@
+<div class="card card-body">
+    <div class="container-fluid login card-body pl-2 pr-2">
+        <div class="text-light font-m pt-3">Login ou <a href="{{ main.urlBase }}/cadastro" title="Criar Conta ou Fazer Cadastro">Criar Conta</a></div>
+        <form action="login" method="post">
+            <div class="form-group">
+                <label for="user" class="text-light no-space-bottom">E-mail:</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="material-icons">person</i></span>
+                    </div>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Seu E-mail" title="Digite seu E-mail">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password" class="text-light no-space-bottom">Senha:</label>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="material-icons">vpn_key</i></span>
+                    </div>
+                    <input type="password" id="password" name="password" class="form-control"  placeholder="Sua Senha" title="Digite sua Senha">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-info mb-2" title="Fazer Login">&nbsp;Entrar&nbsp;</button>
+        </form>
+
+        <span class="text-light font-p"><a href="{{ main.urlBase }}/recuperar-senha" title="Esqueci a Senha">Esqueci a Senha</a></span><br>
+        <span class="text-light font-p"><a href="{{ main.urlBase }}/cadastro" title="Não sou Cadastrado">Não sou Cadastrado</a></span>
+    </div>
+</div>

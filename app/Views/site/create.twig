@@ -1,0 +1,27 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    {#{% block informations %}
+        {% include 'includes-LIXO/informations.twig' %}
+    {% endblock %}
+#}
+    <div id="ver">
+        <h1>recebendo as variaveis do formulario via post</h1>
+    </div>
+    {{ app.request.query.get('email') }}
+
+    {{ app.request.parameter('page') }}
+    Teste: {{ main.urlBase }}<br>
+    Teste2: {{ name }}<br>
+    {% for envia in users %}
+        {{ user.name }}
+        {{ user.cpf }}
+    {% endfor %}
+
+    {#{% if post.name is defined %}#}
+        Game title: {{ bodyParsed.name }}
+
+    {#{% endif%}#}
+
+
+{% endblock %}

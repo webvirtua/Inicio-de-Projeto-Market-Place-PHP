@@ -1,0 +1,78 @@
+<div id="menu_c" class="menu_c">
+    <div class="container-limit">
+        <div class="float-l" itemscope="" itemtype="https://schema.org/Brand">
+            <a itemprop="url" href="{{ main.urlBase }}" title="Galeria 44 | Roupas Femininas, Roupas Masculinas"><img itemprop="logo" src="{{ main.urlImage }}/site/logo-lendary.png" alt="logo-lendary.png" title="Galeria44.com.br"></a>
+            <meta itemprop="name" content="Galeria 44">
+        </div>
+
+        <input type="checkbox" id="control-nav" />
+        <label for="control-nav" class="control-nav"></label>
+        <label for="control-nav" class="control-nav-close"></label>
+        <h5 class="hidden-all">Este bloco é o menu principal, com os links de categorias e subcategorias, páginas de promoções, lojas, vendedores, anunciantes contato, login e home page.</h5>
+        <nav class="float-r" itemscope="" itemtype="http://schema.org/SiteNavigationElement">
+            <ul class="list-auto">
+                {#microdados de navigation aparece quando usa url .com.br#}
+                <meta itemprop="name" content="Página Inicial">
+                <li class='active'><a itemprop="url" href="{{ main.urlBase }}" title="Pagina Inicial"><i class="material-icons icon text-center">store</i>Home</a>
+                    <meta itemprop="name" content="Coleções">
+                <li><a itemprop="url" href="{{ main.urlBase }}/colecoes" class="dropdown-toggle" title="Coleções de Produtos" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories"><i class="material-icons icon text-center">view_carousel</i>Coleções</a></li>
+                <meta itemprop="name" content="Categorias">
+                <li><a itemprop="url" href="{{ main.urlBase }}/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#collapseCategories" aria-expanded="true" aria-controls="collapseCategories"><i class="material-icons icon text-center">view_list</i>Categorias</a></li>
+                <meta itemprop="name" content="Outleet">
+                <li><a itemprop="url" href="{{ main.urlBase }}/lojas" title="Outleet em Promoção na Galeria 44"><i class="material-icons icon text-center">slow_motion_video</i>Outleet</a></li>
+                <meta itemprop="name" content="Blog">
+                <li><a itemprop="url" href="{{ main.urlBase }}/lojas-goiania" title="Lojas na Galeria 44"><i class="material-icons icon text-center">card_giftcard</i>Blog</a></li>
+                <meta itemprop="name" content="Contato">
+                <li><a itemprop="url" href="{{ main.urlBase }}/contato" title="Entre em Contato com Galeria 44"><i class="material-icons icon text-center">insert_comment</i>Contato</a></li>
+
+                {% if main.sessionLogin.idUser is not empty %}
+                    <meta itemprop="Carrinho de Compras - Minhas Configurações" content="Carrinho de Compras - Minhas Configurações">
+                    <li><a itemprop="url" href="{{ main.urlBase }}/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#configurations" aria-expanded="true" aria-controls="configurations"><i class="material-icons icon text-center">settings</i>&nbsp;</a></li>
+                {% else %}
+                    <meta itemprop="name" content="Login">
+                    <li><a itemprop="url" href="{{ main.urlBase }}/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#collapseLoginMenu" aria-expanded="true" aria-controls="collapseLoginMenu"><i class="material-icons icon text-center">account_box</i>&nbsp; Login</a></li>
+                {% endif %}
+
+                <li><a itemprop="url" href="{{ main.urlBase }}/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#cart" aria-expanded="true" aria-controls="cart"><i class="material-icons icon text-center">shopping_cart</i>&nbsp;</a></li>
+            </ul>
+
+            <div class="collapse dropCategories" id="collapseCategories" data-parent="#menu_c">
+                {% include 'includes/categories.twig' %}
+            </div>
+
+            <div class="collapse dropLogin" id="collapseLoginMenu" data-parent="#menu_c">
+                {% include 'includes/form-login.twig' %}
+            </div>
+
+            <div class="collapse dropLogin" id="configurations" data-parent="#menu_c">
+                {% include 'includes/configurations.twig' %}
+            </div>
+
+            <div class="collapse dropCart" id="cart" data-parent="#menu_c">
+                {% include 'includes/cart.twig' %}
+            </div>
+
+            <label for="control-nav" data-toggle="tooltip" title="Fechar Menu" class="icon-close hidden-my"><i class="material-icons icon-close">close</i></label>
+        </nav>
+
+        <div class="format-log hidden-my text-center">
+            <ul>
+                {% if main.sessionLogin.idUser is not empty %}
+                    <meta itemprop="Carrinho de Compras" content="Carrinho de Compras">
+                    <li class="rack hidden-my hidden-294"><a itemprop="url" href="<?php echo $urlbase_config;?>/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#cartMobile" aria-expanded="true" aria-controls="cartMobile"><i class="material-icons icon-login text-center">shopping_cart</i></a></li>
+                {% else %}
+                    <meta itemprop="name" content="Login">
+                    <li class="rack hidden-my hidden-294"><a itemprop="url" href="<?php echo $urlbase_config;?>/categorias" class="dropdown-toggle" title="Categorias de Produtos" data-toggle="collapse" data-target="#collapseLogin" aria-expanded="true" aria-controls="collapseLogin"><i class="material-icons icon-login text-center">account_box</i>&nbsp; Login</a></li>
+                {% endif %}
+            </ul>
+        </div>
+
+        <div class="collapse dropLoginTop" id="collapseLogin" data-parent="#menu_c">
+            {% include 'includes/form-login.twig' %}
+        </div>
+
+        <div class="collapse dropCartTop" id="cartMobile" data-parent="#menu_c">
+            {% include 'includes/cart.twig' %}
+        </div>
+    </div>
+</div>

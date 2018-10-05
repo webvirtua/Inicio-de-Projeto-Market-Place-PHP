@@ -1,0 +1,28 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    {#{% block informations %}
+        {% include 'includes-LIXO/informations.twig' %}
+    {% endblock %}
+#}
+    <div id="ver">
+        <h1>Conteúdo da Page Lojas</h1>
+    </div>
+    Teste: {{ main.urlBase }}<br>
+    {{ type }}<br>
+
+    foreach($crew as $member){}<br>
+    {% for member in crew %}
+        {% if member.status == 'Alive' %}
+            Sucesso! :)<br>
+        {% endif %}
+
+        {% if member.status != 'Alive' %}
+            É a Júlia! :)<br>
+        {% endif %}
+
+        Nome: {{ member.name }}, Profissão: {{ member.role }}, Status: {{ member.status }}<br>
+    {% endfor %}<br><br>
+
+
+{% endblock %}

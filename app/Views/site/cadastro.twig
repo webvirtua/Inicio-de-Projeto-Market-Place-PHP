@@ -1,0 +1,501 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    Teste: {{ main.urlBase }}<br>
+    {% for user in users %}
+        {{ user.name }}
+        {{ user.cpf }}<br>
+    {% endfor %}
+
+    <br>Nome: {{ main.sessionLogin.userName }}
+    <br>Tipo: {{ main.sessionLogin.userType }}
+    <br>idPerson: {{ main.sessionLogin.idPerson }}
+    <br>idUser: {{ main.sessionLogin.idUser }}
+    <br>idCorporation: {{ main.sessionLogin.idCorporation }}
+
+
+    <div class="container-limit">
+        {#{% if failure is not empty %}
+            <div class="alert alert-danger mt-3" role="alert">
+                {{ failure }}
+            </div>
+        {% elseif success is not empty %}
+            <div class="alert alert-success mt-3" role="alert">
+                {{ success }}
+            </div>
+        {% endif %}#}
+
+        {% if main.sessionLogin.idUser is empty %}
+            <span class="font-m">Cadastre-se</span><br>
+            <span class="font-p">Crie uma conta rápido e fácil com o Facebook</span><br><br><br>
+            <button type="submit" class="btn container-fluid logar-facebook no-space-top mb-3" title="Enviar Cadastro"> <i class="ion-social-facebook font-m"></i>&nbsp;&nbsp;Entrar com Facebook</button>
+            <br><span class="font-p">ou Preencha o formulário abaixo:</span>
+        {% else %}
+            <span class="font-m">Cadastre seu Endereço</span><br>
+            <span class="font-p">Assim seu cadastro já estará completo quando finalizar pedidos.</span><br>
+        {% endif %}
+
+
+    </div>
+
+    <div class="container-fluid newsletter mt-1 mb-1">
+        <div class="container-limit">
+            {% if main.sessionLogin.idUser is empty %}
+                <label for="personType" class="text-light row container-limit">Tipo de Cadastro:</label>
+                <input type="radio" name="options" onclick="checkRadio(0)" checked> <span class="text-light">CPF&nbsp;&nbsp;</span>
+                <input type="radio" name="options" onclick="checkRadio(1)"> <span class="text-light">CNPJ</span>
+
+                <form action="cadastro" method="post">
+                    <span id="p1">
+                        <label for="personType" class="text-light row container-limit">Tipo de Cliente:</label>
+                        <input type="radio" id="client1" name="client" value="1" checked> <span class="text-light">Atacado&nbsp;&nbsp;</span>
+                        <input type="radio" id="client2" name="client" value="0"> <span class="text-light">Varejo</span>
+
+                        <br><span class="text-light"><b>Dados da Empresa</b></span>
+
+                        <div class="form-group">
+                            {% if error.cnpj is not empty %}
+                                <div class="alert alert-danger no-space-bottoms" role="alert">
+                                    {{ error.cnpj }}
+                                </div>
+                            {% endif %}
+
+                            <label for="email" class="text-light no-space-bottom">CNPJ:</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="material-icons" title="Digite o CNPJ da Empresa">verified_user</i></span>
+                                </div>
+                                <input type="number" id="cnpj" name="cnpj" class="form-control" placeholder="CNPJ da Empresa" title="Digite o CNPJ da Empresa" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {% if error.social_reason is not empty %}
+                                <div class="alert alert-danger no-space-bottoms" role="alert">
+                                    {{ error.social_reason }}
+                                </div>
+                            {% endif %}
+                            <label for="password" class="text-light no-space-bottom">Razão Social:</label>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" title="Digite seu Nome"><i class="material-icons" title="Digite a Razão Social da Empresa">note</i></span>
+                                </div>
+                                <input type="text" id="social_reason" name="social_reason" class="form-control" placeholder="Razão Social da Empresa" title="Digite a Razão Social da Empresa" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            {% if error.state_registration is not empty %}
+                                <div class="alert alert-danger no-space-bottoms" role="alert">
+                                    {{ error.state_registration }}
+                                </div>
+                            {% endif %}
+
+                            <label for="cpf" class="text-light no-space-bottom">Inscrição Estadual:</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" title="Digite seu Nome"><i class="material-icons" title="Digite a Inscrição Estadual da Empresa">assignment</i></span>
+                                </div>
+                                <input type="number" id="state_registration" name="state_registration" class="form-control" placeholder="Inscrição Estadual da Empresa" title="Digite a Inscrição Estadual da Empresa" required>
+                            </div>
+                        </div>
+
+                        <input type="checkbox" id="responsible" name="responsible" value="1" checked/>
+                        <label for="responsible" class="text-light mb-1" title="Marque se o Telefone Cadastrado não tem WhatsApp">&nbsp;Sou responsável pela Empresa</label>
+                    </span>
+
+                    <br><span class="text-light"><b>Dados Pessoais</b></span>
+
+                    <div class="form-group">
+                        {% if error.email is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.email }}
+                            </div>
+                        {% endif %}
+
+                        <label for="email" class="text-light">E-mail:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons" title="Digite seu E-mail">mail</i></span>
+                            </div>
+                            <input type="text" id="email" name="email" class="form-control" placeholder="Seu E-mail" title="Digite seu E-mail">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% if error.password is not empty %}
+                                <div class="alert alert-danger no-space-bottoms" role="alert">
+                                    {{ error.password }}
+                                </div>
+                            {% elseif error.passwordConfirm is not empty %}
+                                <div class="alert alert-danger no-space-bottoms" role="alert">
+                                    {{ error.passwordConfirm }}
+                                </div>
+                            {% endif %}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="password" class="text-light no-space-bottom">Senha:</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">lock</i></span>
+                                        </div>
+                                        <input type="password" id="password" name="password" class="form-control" placeholder="Escolha sua Senha" title="Digite uma Senha">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="password_confirm" class="text-light no-space-bottom">Confirmar Senha:</label>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">lock</i></span>
+                                        </div>
+                                        <input type="password" id="password_confirm" name="password_confirm" class="form-control" placeholder="Confirme sua Senha" title="Confirme sua Senha">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.cpf is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.cpf }}
+                            </div>
+                        {% endif %}
+
+                        <label for="cpf" class="text-light no-space-bottom">CPF:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">how_to_reg</i></span>
+                            </div>
+                            <input type="text" id="cpf" name="cpf" class="form-control" placeholder="Seu CPF" title="Digite seu CPF">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.name is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.name }}
+                            </div>
+                        {% endif %}
+
+                        <label for="name" class="text-light no-space-bottom">Nome:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                    <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">person</i></span>
+                            </div>
+                            <input type="text" id="name" name="name" class="form-control" placeholder="Seu Nome" title="Digite seu Nome">
+                            <div class="help-block with-errors error-form col-12"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.lastName is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.lastName }}
+                            </div>
+                        {% endif %}
+
+                        <label for="lastName" class="text-light no-space-bottom">Sobrenome:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">person_add</i></span>
+                            </div>
+                            <input type="text" id="lastName" name="lastName" class="form-control" placeholder="Seu Sobrenome" title="Digite seu Sobrenome">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.birth is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.birth }}
+                            </div>
+                        {% endif %}
+
+                        <label for="birth" class="text-light no-space-bottom">Data de Nascimento:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">event_available</i></span>
+                            </div>
+                            <input type="date" id="birth" name="birth" class="form-control" placeholder="Data de Nascimento" title="Digite sua Data de Nascimento">
+                        </div>
+                    </div>
+
+                    {% if error.sex is not empty %}
+                        <div class="alert alert-danger no-space-bottoms" role="alert">
+                            {{ error.sex }}
+                        </div>
+                    {% endif %}
+
+                    <label for="personType" class="text-light row container-limit">Sexo:</label>
+                    <input type="radio" name="sex" value="M"> <span class="text-light">Masculino&nbsp;&nbsp;</span>
+                    <input type="radio" name="sex" value="F"> <span class="text-light">Feminino</span>
+
+                    <div class="form-group mt-2">
+                        {% if error.code is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.code }}
+                            </div>
+                        {% elseif error.phone is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.phone }}
+                            </div>
+                        {% endif %}
+
+                        <label for="phone" class="text-light no-space-bottom">Telefone:</label>
+                        <div class="input-group mb-1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons" title="Digite seu Telefone">phone</i></span>
+                            </div>
+                            <input type="text" id="code" name="code" class="form-control col-3 col-sm-2 col-lg-1" placeholder="DDD" title="Digite o DDD ou Código de Área">
+                            <input type="text" id="phone" name="phone" class="form-control" placeholder="Seu Telefone" title="Digite seu Telefone">
+                            <label for="phone" class="text-light row container-limit"><i class="ion-social-whatsapp-outline"></i>&nbsp;Este telefone tem WhatsApp?</label>
+                        </div>
+
+                        <input type="radio" name="whats" value="1" required> <span class="text-light">Sim&nbsp;&nbsp;</span>
+                        <input type="radio" name="whats" value="0" required> <span class="text-light">Não</span>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <input type="checkbox" name="newsletter" value="1" checked/>
+                        <label for="newsletter" class="text-light mb-1" value="1">Receber ofertas por E-mail</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-info no-space-top mb-3" title="Enviar Cadastro">Cadastrar</button>
+                </form>
+            {% else %}
+                <form action="cadastro" method="post">
+                    {#<label for="personType" class="text-light row container-limit">Tipo de Cliente:</label>
+                    <input type="radio" id="client1" name="client" value="1" checked> <span class="text-light">Atacado&nbsp;&nbsp;</span>
+                    <input type="radio" id="client2" name="client" value="0"> <span class="text-light">Varejo</span>#}
+
+                    <span class="text-light"><b>Dados do Endereço</b></span>
+
+                    {% if error.address is not empty %}
+                        <div class="alert alert-danger no-space-bottoms" role="alert">
+                            {{ error.address }}
+                        </div>
+                    {% endif %}
+
+                    <label for="personType" class="text-light row container-limit">Tipo do Endereço:</label>
+                    <input type="radio" name="address" value="R"> <span class="text-light">Residêncial&nbsp;&nbsp;</span>
+                    <input type="radio" name="address" value="C"> <span class="text-light">Comercial</span>
+
+                    <div class="form-group">
+                        {% if error.cep is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.cep }}
+                            </div>
+                        {% endif %}
+
+                        <label for="email" class="text-light no-space-bottom">Cep:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons" title="Digite o CNPJ da Empresa">where_to_vote</i></span>
+                            </div>
+                            <input type="number" id="cep" name="cep" class="form-control" placeholder="CEP da Rua" title="Digite o CEP da Rua">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.street is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.street }}
+                            </div>
+                        {% endif %}
+
+                        <label for="password" class="text-light no-space-bottom">Rua:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons" title="Digite a Razão Social da Empresa">view_column</i></span>
+                            </div>
+                            <input type="text" id="street" name="street" class="form-control" placeholder="Nome da Rua" title="Digite o Nome da Rua">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.number is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.number }}
+                            </div>
+                        {% endif %}
+
+                        <label for="cpf" class="text-light no-space-bottom">Número:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons" title="Digite a Inscrição Estadual da Empresa">dialpad</i></span>
+                            </div>
+                            <input type="number" id="number" name="number" class="form-control" placeholder="Número (Opcional)" title="Digite Número da Casa, Apartamento, etc...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="text-light no-space-bottom">Complemento:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="material-icons" title="Digite seu E-mail">view_module</i></span>
+                            </div>
+                            <input type="text" id="complement" name="complement" class="form-control" placeholder="Quadra, Apartamento, etc... (Opcional)" title="Digite sua Quadra, Apartamento, etc...">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.district is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.district }}
+                            </div>
+                        {% endif %}
+
+                        <label for="password" class="text-light no-space-bottom">Bairro:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">widgets</i></span>
+                            </div>
+                            <input type="text" id="district" name="district" class="form-control" placeholder="Nome do Bairro" title="Digite o Nome do Bairro">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        {% if error.city is not empty %}
+                            <div class="alert alert-danger no-space-bottoms" role="alert">
+                                {{ error.city }}
+                            </div>
+                        {% endif %}
+
+                        <label for="cpf" class="text-light no-space-bottom">Cidade:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">business</i></span>
+                            </div>
+                            <input type="text" id="city" name="city" class="form-control" placeholder="Nome da Cidade" title="Digite o Nome da Cidade">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="text-light no-space-bottom">Estado:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">device_hub</i></span>
+                            </div>
+                            <input type="text" id="state" name="state" class="form-control" placeholder="Nome da Cidade" title="Digite o Nome da Cidade">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="lastName" class="text-light no-space-bottom">Apelido do Endereço:</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">sentiment_satisfied_alt</i></span>
+                            </div>
+                            <input type="text" id="alias" name="alias" class="form-control" placeholder="Um Apelido para seu Endereço. Ex. Casa, Trabalho. (Opcional)" title="Digite o nome para este Endereço">
+                        </div>
+                    </div>
+
+                    {% if main.sessionLogin.idCorporation is not empty %}
+                        <label for="personType" class="text-light row container-limit">Este é o mesmo endereço da empresa?</label>
+                        <input type="radio" name="company" value="1" required> <span class="text-light">Sim&nbsp;&nbsp;</span>
+                        <input type="radio" name="company" value="0" required> <span class="text-light">Não</span><br>
+                    {% endif %}
+
+                    <div class="form-group hidden-all">
+                        <label for="birth" class="text-light no-space-bottom">Id Person:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">event_available</i></span>
+                            </div>
+                            <input type="number" id="id_person" name="id_person" value="{{ main.sessionLogin.idPerson }}" class="form-control" placeholder="Id Pessoa" title="Id Pessoa">
+                        </div>
+                    </div>
+
+                    <div class="form-group hidden-all">
+                        <label for="birth" class="text-light no-space-bottom">Id Corporation:</label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">event_available</i></span>
+                            </div>
+                            <input type="number" id="id_corporation" name="id_corporation" value="{{ main.sessionLogin.idCorporation }}" class="form-control" placeholder="Id Corporation" title="Id Corporation">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-info no-space-top mb-3 mt-2" title="Enviar Cadastro">Cadastrar Endereço</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        window.onload = function(){
+            checkRadio(0);
+        }
+
+        function checkRadio(x) {
+            if (x == 0) {
+                document.getElementById('p1').style.display = 'none';
+                document.getElementById("cnpj").disabled = true;
+                document.getElementById("state_registration").disabled = true;
+                document.getElementById("social_reason").disabled = true;
+                document.getElementById("client1").disabled = true;
+                document.getElementById("client2").disabled = true;
+                document.getElementById("responsible").disabled = true;
+            } else {
+                document.getElementById('p1').style.display = 'block';
+                document.getElementById("cnpj").disabled = false;
+                document.getElementById("state_registration").disabled = false;
+                document.getElementById("social_reason").disabled = false;
+                document.getElementById("client1").disabled = false;
+                document.getElementById("client2").disabled = false;
+                document.getElementById("responsible").disabled = false;
+            }
+            return;
+        }
+    </script>
+
+    <script>
+        function cnpjDisable() {
+            /*document.getElementById('p1').style.display = 'none';*/
+            document.getElementById("cnpj").disabled = true;
+            document.getElementById("state_registration").disabled = true;
+            document.getElementById("social_reason").disabled = true;
+
+        }
+
+        function cnpjEnable() {
+            /*document.getElementById('p1').style.display = 'block';*/
+            document.getElementById("cnpj").disabled = false;
+            document.getElementById("state_registration").disabled = false;
+            document.getElementById("social_reason").disabled = false;
+        }
+    </script>
+
+    {% if main.sessionLogin.cep is empty %}
+        {#ver depois porque não esta pegando o jquery do footer#}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        {#<script src="{{ main.urlBase }}/libs/js/validator.js"></script>#}
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#cep').blur(function () {
+                    var cep = $('#cep').val() || '';
+
+                    if(!cep){
+                        return
+                    }
+
+                    var url = 'https://viacep.com.br/ws/'+cep+'/json/';
+                    $.getJSON(url, function(data){
+                        if("error" in data){
+                            return
+                        }
+
+                        $('#street').val(data.logradouro);
+                        $('#complement').val(data.complemento);
+                        $('#district').val(data.bairro);
+                        $('#city').val(data.localidade);
+                        $('#state').val(data.uf);
+                    });
+                });
+            });
+        </script>
+    {% endif %}
+{% endblock %}

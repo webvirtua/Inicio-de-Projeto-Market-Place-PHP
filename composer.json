@@ -1,0 +1,25 @@
+{
+  "name": "Lendary",
+  "description": "Projeto Lendary",
+  "type": "ProjectWebEcommerce",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Luiz Rodrigues",
+      "email": "atende@WebVirtua.com.br"
+    }
+  ],
+  "require": {
+    "slim/slim": "^3.0",
+    "slim/twig-view": "^2.0",
+    "phpmailer/phpmailer": "6.0"
+  },
+  "require-dev": {
+    "phpdocumentor/phpdocumentor": "2.*"
+  },
+  "autoload":{
+    "psr-4":{
+      "App\\": "app"
+    }
+  }
+}

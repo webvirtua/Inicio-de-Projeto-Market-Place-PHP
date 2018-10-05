@@ -1,0 +1,87 @@
+{% extends 'app.twig' %}
+
+{% block content %}
+    Teste: {{ main.urlBase }}<br>
+    {% for user in users %}
+        {{ user.name }}
+        {{ user.cpf }}<br>
+    {% endfor %}
+
+    <br>ip: {{ ip }}
+    <br>sessão: {{ session }}
+    <br>Nome: {{ main.sessionLogin.userName }}
+    <br>Tipo: {{ main.sessionLogin.userType }}
+    <br>idPerson: {{ main.sessionLogin.idPerson }}
+    <br>idUser: {{ main.sessionLogin.idUser }}
+    <br>idCorporation: {{ main.sessionLogin.idCorporation }}
+    <br>idStore: {{ main.sessionLogin.idstore }}
+    <br>Ativado: {{ main.sessionLogin.activated }}
+    <br>Nome da loja: {{ main.sessionLogin.nameStore }}
+
+    <div class="container-limit">
+        {% if sessionLogin.idUser is not empty %}
+            <div class="alert alert-danger" role="alert">
+                Você já está logado em sua Conta!
+            </div>
+        {% else %}
+            <span class="font-m">Faça Login</span><br>
+            <span class="font-p">Digite seu E-mail e Senha</span><br>
+        {% endif %}
+    </div>
+
+
+    
+    <div class="thumbnail">
+        <img src="https://i1.wp.com/gamelogia.com.br/wp-content/uploads/2016/11/gamer.jpg?resize=1280%2C640&ssl=1"/>
+    </div>
+    {#<div class="thumbnail">
+        <img src="https://i1.wp.com/gamelogia.com.br/wp-content/uploads/2016/11/gamer.jpg?resize=1280%2C640&ssl=1" class="portrait" alt="Image" />
+    </div>
+#}
+
+
+
+    <div class="container-fluid newsletter mt-1 mb-1">
+        <div class="container-limit">
+            <form action="login" method="post">
+                <br><span class="text-light"><b>Dados de Acesso</b></span>
+
+                <div class="form-group">
+                    {% if error.email is not empty %}
+                        <div class="alert alert-danger no-space-bottoms" role="alert">
+                            {{ error.email }}
+                        </div>
+                    {% endif %}
+
+                    <label for="email" class="text-light no-space-bottom">E-mail:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="material-icons" title="Digite seu E-mail">mail</i></span>
+                        </div>
+                        <input type="email" id="email" name="email" class="form-control" placeholder="Seu E-mail" title="Digite seu E-mail">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    {% if error.password is not empty %}
+                        <div class="alert alert-danger no-space-bottoms" role="alert">
+                            {{ error.password }}
+                        </div>
+                    {% endif %}
+
+                    <label for="password" class="text-light no-space-bottom">Senha:</label>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">lock</i></span>
+                        </div>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Escolha sua Senha" title="Digite uma Senha">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-info no-space-top mb-3 mt-2" title="Enviar Cadastro">&nbsp;Entrar&nbsp;</button>
+
+                <br><div class="text-light font-p link-defaut pb-3"><a href="{{ main.urlBase }}/recuperar-senha" title="Esqueci a Senha">Esqueci a Senha</a></div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

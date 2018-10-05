@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <link rel="shortcut icon" href="{{ main.urlImage }}/site/favicon-lendary.gif" type="image/png" />
+        <title>{{ meta.title }} - Lendary</title>
+
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ main.urlBase }}/public/css/app.css">
+            {#<link rel="stylesheet" href="http://localhost/project_galeria44/app/Views/css/app.css">#}
+            {#<title>{% block title %}{% endblock %} - My Webpage</title>#}
+
+            <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+            <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+        {% endblock %}
+
+        <script type="application/ld+json">
+            {
+               "@context": "http://schema.org",
+               "@type": "WebSite",
+               "name" : "Galeria 44 - Venda no Atacado e Varejo Online e nas Lojas Físicas, Comercio de Roupas Femininas, Masculinas, Infantis, Evangélicas, Calçados, Acessórios e muito mais",
+               "alternateName" : "Roupas no Atacado",
+               "description" : "Compre Online na Galeria 44 no Atacado e Varejo negociando direto com o Fabricante sem intermediarios!",
+               "url": "https://www.galeria44.com.br"
+            }
+        </script>
+        <script type="application/ld+json">
+            {
+              "@context": "http://schema.org",
+              "@type": "Organization",
+              "name": "Galeria 44  - Venda no Atacado e Varejo",
+              "legalName" : "Galeria 44",
+              "description" : "Venda no Atacado e Varejo Online e nas Lojas Físicas, Comercio de Roupas Femininas, Masculinas, Infantis, Evangélicas, Calçados, Acessórios e muito mais!",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua 44",
+                "addressRegion": "Setor Norte Ferroviário",
+                "addressLocality": "Goiânia - Goiás",
+                "postalCode": "74063-300",
+                "addressCountry": "BR"
+              },
+              "email": "atende@galeria44.com.br",
+              "foundingDate": "10/11/2011",
+              "telephone": "+55 (62) 9 9417-5616",
+              "url" : "https://www.galeria44.com.br",
+              "areaServed" : [
+                  "Brasil"
+                ],
+                "sameAs" : [ "https://www.facebook.com/galerias44",
+                     "https://twitter.com/Galeria44",
+                     "https://plus.google.com/u/0/115363990700686193917" ],
+                "contactPoint" : [{
+                "@type" : "ContactPoint",
+                "telephone" : "+55-062-99417-5616",
+                "contactType" : "sales"
+              }],
+              "logo" : "https://www.galeria44.com.br/imagens/logo-galeria-44.png"
+
+            }
+        </script>
+        <script type="application/ld+json">
+            {
+              "@context": "http://schema.org",
+              "@type": "ShoppingCenter",
+              "@id": "https://www.galeria44.com.br",
+              "name": "Galeria 44 - Centro Comercial de Lojas que Vendem no Atacado e Varejo em Goiânia-GO",
+              "legalName" : "Galeria 44",
+              "description": "Compre na Galeria 44 no Atacado e Varejo com Menor Preço em Roupas Feminina, Masculina, Infantil, Evangélica, Plus Size, Body, Calçados, Bijuterias, Bolsas, acessórios e muito mais!",
+              "url": "https://galeria44.com.br",
+              "image": [
+                "https://example.com/photos/1x1/photo.jpg",
+                "https://example.com/photos/4x3/photo.jpg",
+                "https://example.com/photos/16x9/photo.jpg"
+               ],
+               "logo" : "https://www.galeria44.com.br/imagens/logo-galeria-44.png",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Rua 44",
+                "addressRegion": "Setor Norte Ferroviário",
+                "addressLocality": "Goiânia - Goiás",
+                "postalCode": "74063-300",
+                "addressCountry": "BR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": -16.658152,
+                "longitude": -49.258198
+              },
+              "email": "atende@galeria44.com.br",
+              "telephone": "+55 (62) 9 9417-5616",
+              "foundingDate": "10/11/2011",
+              "areaServed" : [
+                 "Brasil"
+              ],
+              "openingHoursSpecification": [
+                {
+                  "@type": "OpeningHoursSpecification",
+                  "dayOfWeek": [
+                    "Quarta-feira",
+                    "Quinta-feira",
+                    "Sexta-feita",
+                    "Sábado"
+                  ],
+                  "opens": "08:00",
+                  "closes": "18:00"
+                }
+              ],
+              "photo" : "http://www.acme-innsbruck.at//media/hotel_front.png",
+              "priceRange": "R$ 5,00 - RS 120,00",
+              "sameAs" : [ "https://www.facebook.com/galerias44",
+                "https://twitter.com/Galeria44",
+                "https://plus.google.com/u/0/115363990700686193917" ],
+                "contactPoint" : [{
+                "@type" : "ContactPoint",
+                "telephone" : "+55-062-99417-5616",
+                "contactType" : "sales"
+              }]
+            }
+        </script>
+
+        <!--inicio codigo pixel facebook--><!-- Facebook Pixel Code -->
+        <script>
+            !function(f,b,e,v,n,t,s)
+            {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+                n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+                if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+                n.queue=[];t=b.createElement(e);t.async=!0;
+                t.src=v;s=b.getElementsByTagName(e)[0];
+                s.parentNode.insertBefore(t,s)}(window, document,'script',
+                'https://connect.facebook.net/en_US/fbevents.js');
+            fbq('init', '1896331967245563');
+            fbq('track', 'PageView');
+        </script>
+        <noscript><img height="1" width="1" style="display:none"
+                       src="https://www.facebook.com/tr?id=1896331967245563&ev=PageView&noscript=1"
+            /></noscript>
+        <!-- End Facebook Pixel Code --><!--fim codigo pixel facebook-->
+    </head>
+
+    <body onload="afterLoad()">
+        {% include 'includes/navigation.twig' %}
+
+        {% block header %}
+            {% include 'includes/slider-search.twig' %}
+        {% endblock %}
+        {#{{ blah() }}#}
+
+        {#Conteúdo editável dentro bloco content#}
+        {% block content %} {% endblock %}
+
+        <span itemscope="" itemtype="https://schema.org/WPFooter">
+            {% block footer %}
+                <div class="social">
+                    <ul class="socialIcons pt-2">
+                        <li class="facebook" title="Siga-nos no Facebook"><a itemprop="sameAs" href="facebook.com">&nbsp;<i class="ion-social-facebook socialIco"></i> Facebook</a></li>
+                        <li class="twitter" title="Siga-nos no Twitter"><a itemprop="sameAs" href="twitter.com"><i class="ion-social-twitter socialIco"></i>Twitter</a></li>
+                        <li class="instagram" title="Siga-nos no Instagram"><a itemprop="sameAs" href="instagram.com"><i class="ion-social-instagram socialIco"></i>Instagram</a></li>
+                        <li class="steam" title="Nos Adicione no WhatsApp"><a itemprop="sameAs" href="whatsapp.com"><i class="ion-social-whatsapp-outline socialIco"></i>Whats</a></li>
+                    </ul>
+                </div>
+
+                <footer class="footer">
+                    <div class="container-limit row">
+                        <aside class="col-md-4">
+                            <a href="<?php echo $urlbase_config;?>/anunciar-gratis" title="Anunciar Loja Gratís">LOJA</a>
+
+                            <p class="text-secondary">Avenida Bernardo Sayão n° 1081 Setor Centro Oeste, Goiânia - GO.<br>CNPJ: 22.745.825/0001-78<br>
+
+                            <div id="fb-root"></div>
+                            <script>(function(d, s, id) {
+                                    var js, fjs = d.getElementsByTagName(s)[0];
+                                    if (d.getElementById(id)) return;
+                                    js = d.createElement(s); js.id = id;
+                                    js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v3.0';
+                                    fjs.parentNode.insertBefore(js, fjs);
+                                }(document, 'script', 'facebook-jssdk'));
+                            </script>
+                            <div class="fb-like" data-href="https://www.facebook.com/galerias44/" data-width="300" data-layout="standard" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                        </aside>
+
+                        <div class="col-md-4 border-lt">
+                            <a href="<?php echo $urlbase_config;?>/contato" title="Fale Conosco">FALE CONOSCO</a><br>
+
+                            <span class="d-flex align-items-center text-secondary" title="Telefone da Galeria 44"><i class="ion-android-call socialIco mt-1"></i>&nbsp;(62) 9 3293-0263</span>
+                            <span class="d-flex align-items-center text-secondary" title="WhatsApp da Galeria 44"><i class="ion-social-whatsapp-outline socialIco"></i>&nbsp;(62) 9 9417-5616</span>
+                            <span class="d-flex align-items-center text-secondary" title="E-mail da Galeria 44"><i class="ion-android-mail socialIco mt-1"></i>&nbsp;atende@lendary.com.br</span>
+                        </div>
+
+                        <div class="col-md-4">
+                            <a href="<?php echo $urlbase_config;?>/contato" title="Fale Conosco">MINHA CONTA</a><br>
+                            <a href="<?php echo $urlbase_config;?>/44" title="Política de Privacidade">Quem Somos</a><br>
+                            <a href="<?php echo $urlbase_config;?>/44" title="Política de Privacidade">Minhas Compras</a><br>
+                            <a href="<?php echo $urlbase_config;?>/44" title="Política de Privacidade">Rotas</a><br>
+                            <a href="<?php echo $urlbase_config;?>/44" title="Política de Privacidade">Política de Privacidade</a><br>
+                            <a href="<?php echo $urlbase_config;?>/termos-e-condicoes" title="Termos e Condições">Termos e Condições</a></p>
+                        </div>
+                    </div>
+                </footer>
+            {% endblock %}
+
+            {% block copyright_footer %}
+                <div class="social mt-0 pt-2 pb-2 text-secondary copyright container-fluido" itemscope="" itemprop="copyrightHolder" itemtype="https://schema.org/Organization">
+                    <div class="row container-limit">
+                        <div class="col-md-7">
+                            Copyright© 2015 - 2018 Todos os direitos reservados - <span itemprop="brand">Lendary</span>
+                            <meta itemprop="name" content="Galeria 44">
+                            <meta itemprop="logo" content="{{ main.urlImage }}/site/logo-galeria-44.png">
+                        </div>
+                        <div class="col-md-3">
+                            <a href="<?php echo $urlbase_config;?>/termos-e-condicoes" title="Web Virtua" class="">By Web Virtua</a>
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+        </span>
+
+        {% block css_onload %}
+            <div id="css"></div>
+        {% endblock %}
+
+        {% block js_footer %}
+            {#bootstrap.bundle.min.js está dando erro no console, não atrapalha em nada no funcionamento#}
+            {#<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>#}
+            <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet"> {#Colocar no onload#}
+
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+            {#<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>#}
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        {% endblock %}
+    </body>
+</html>

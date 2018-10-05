@@ -1,0 +1,95 @@
+<header>
+    <div id="carouselExampleIndicators" class="carousel slide slides-box" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner slides">
+            <div class="carousel-item active">
+                <a itemprop="url" href="#{{ main.urlBase }}/testando-urls" title="só vendo">
+                    <picture> <!--http://scottjehl.github.io/picturefill/ https://tableless.com.br/imagens-responsivas-de-alta-performance/-->
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="{{ main.urlImage }}/banner.jpg" media="(min-width: 600px)">
+                        <source srcset="{{ main.urlImage }}/1-600.png" media="(min-width: 480px)">
+                        <source srcset="{{ main.urlImage }}/1-480.png" media="(min-width: 360px)">
+                        <source srcset="{{ main.urlImage }}/1-360.png" media="(min-width: 10px)">
+                        <!--[if IE 9]></video><![endif]-->
+                        <img class="d-block w-100 img-fluid" srcset="{{ main.urlImage }}/banner.jpg" alt="{{ main.urlImage }}" title="testando pra ver">
+
+                    </picture>
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a itemprop="url" href="#{{ main.urlBase }}/testando-urls2" title="só vendo 2">
+                    <picture> <!--http://scottjehl.github.io/picturefill/ https://tableless.com.br/imagens-responsivas-de-alta-performance/-->
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="{{ main.urlImage }}/banner-2.jpg" media="(min-width: 600px)">
+                        <source srcset="{{ main.urlImage }}/banner-2.jpg" media="(min-width: 480px)">
+                        <source srcset="{{ main.urlImage }}/banner-2.jpg" media="(min-width: 360px)">
+                        <source srcset="{{ main.urlImage }}/banner-2.jpg" media="(min-width: 10px)">
+                        <!--[if IE 9]></video><![endif]-->
+                        <img class="d-block w-100 img-fluid" srcset="{{ main.urlImage }}/banner-2.jpg" alt="{{ main.urlImage }}" title="testando pra ver 2">
+
+                    </picture>
+                </a>
+            </div>
+
+            <div class="carousel-item">
+                <a itemprop="url" href="#{{ main.urlBase }}/testando-urls3" title="só vendo 2">
+                    <picture> <!--http://scottjehl.github.io/picturefill/ https://tableless.com.br/imagens-responsivas-de-alta-performance/-->
+                        <!--[if IE 9]><video style="display: none;"><![endif]-->
+                        <source srcset="{{ main.urlImage }}/banner-3.jpg" media="(min-width: 600px)">
+                        <source srcset="{{ main.urlImage }}/banner-3.png" media="(min-width: 480px)">
+                        <source srcset="{{ main.urlImage }}/banner-3.png" media="(min-width: 360px)">
+                        <source srcset="{{ main.urlImage }}/banner-3.png" media="(min-width: 10px)">
+                        <!--[if IE 9]></video><![endif]-->
+                        <img class="d-block w-100 img-fluid" srcset="{{ main.urlImage }}/banner-3.png" alt="{{ main.urlImage }}" title="testando pra ver 3">
+
+                    </picture>
+                </a>
+            </div>
+        </div>
+
+        <a class="carousel-control-prev carousel-control-prev-next" href="#carouselExampleIndicators" role="button" data-slide="prev" title="Slide Anterior">
+            <span aria-hidden="true"><i class="material-icons next-prev">navigate_before</i></span>
+            <span class="sr-only">Previous</span>
+        </a>
+
+        <a class="carousel-control-next carousel-control-prev-next" href="#carouselExampleIndicators" role="button" data-slide="next" title="Próximo Slide">
+            <span aria-hidden="true"><i class="material-icons next-prev">navigate_next</i></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</header>
+
+<div class="container-fluid search mb-1">
+    <div class="container-limit row">
+        <div class="col-sm-12">
+            <div class="container-limit">
+                <form class="navbar-form" role="search">
+                    <div class="input-group">
+                        <input type="text" class="form-control search-btn" placeholder="O que você Procura?" title="Digite aqui o que você procura" name="q">
+
+                        <button class="btn btn-info" type="submit" title="Pesquisar"><i class="material-icons search-icon">search</i></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-limit">
+    {% if failure is not empty %}
+        <div class="alert alert-danger mt-3" role="alert">
+            {{ failure }}
+            {{ main.failure }}
+        </div>
+    {% elseif success is not empty %}
+        <div class="alert alert-success mt-3" role="alert">
+            {{ success }}
+            {{ main.success }}
+        </div>
+    {% endif %}
+</div>

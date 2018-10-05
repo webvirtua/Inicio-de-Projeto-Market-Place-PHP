@@ -1,0 +1,58 @@
+<script>
+    /*mostra esse conteúdo ao carregar páginado*/
+    function afterLoad() {
+        var mostrar, css;
+        css = ''
+
+        mostrar = '<div class="container-fluid newsletter mt-1 mb-1">'
+        mostrar += '    <div class="container-limit">'
+        mostrar += '        <h5 class="text-light pt-3">Cadastre-se e Receba Promoções</h5>'
+        mostrar += '        <form action="/action_page.php">'
+
+        mostrar += '            <div class="form-group">'
+        mostrar += '                <label for="email" class="text-light no-space-bottom">Nome:</label>'
+        mostrar += '                <div class="input-group mb-3">'
+        mostrar += '                    <div class="input-group-prepend">'
+        mostrar += '                        <span class="input-group-text" title="Digite seu Nome"><i class="material-icons">person</i></span>'
+        mostrar += '                    </div>'
+        mostrar += '                    <input type="text" class="form-control" id="name" placeholder="Seu Nome" title="Digite seu Nome" name="name">'
+        mostrar += '                </div>'
+        mostrar += '            </div>'
+
+        mostrar += '            <div class="form-group">'
+        mostrar += '                <label for="email" class="text-light no-space-bottom">E-mail:</label>'
+        mostrar += '                <div class="input-group mb-3">'
+        mostrar += '                    <div class="input-group-prepend">'
+        mostrar += '                        <span class="input-group-text"><i class="material-icons" title="Digite seu E-mail">mail</i></span>'
+        mostrar += '                    </div>'
+        mostrar += '                    <input type="email" class="form-control" id="email" title="Digite seu E-mail" placeholder="Seu E-mail" name="email">'
+        mostrar += '                </div>'
+        mostrar += '            </div>'
+
+        mostrar += '            <div class="form-group">'
+        mostrar += '                <label for="email" class="text-light no-space-bottom">Telefone:</label>'
+        mostrar += '                <div class="input-group mb-3">'
+        mostrar += '                    <div class="input-group-prepend">'
+        mostrar += '                        <span class="input-group-text"><i class="material-icons" title="Digite seu Telefone">phone</i></span>'
+        mostrar += '                    </div>'
+        mostrar += '                    <input type="text" class="form-control col-3 col-sm-2 col-lg-1" id="code" title="Digite o DDD ou Código de Área" placeholder="DDD" name="code">'
+        mostrar += '                    <input type="text" class="form-control" id="phone" title="Digite seu Telefone" placeholder="Seu Telefone" name="phone">'
+        mostrar += '                    <label for="email" class="text-light row container-limit"><i class="ion-social-whatsapp-outline"></i>&nbsp;Este telefone é WhatsApp?</label>'
+
+        mostrar += '                    <input class="radio" type="radio" id="test1" name="radio-group">'
+        mostrar += '                    <label for="test1" class="text-light" title="Marque se o Telefone Cadastrado tem WhatsApp">Sim&nbsp;&nbsp;</label>'
+
+        mostrar += '                    <input class="radio" type="radio" id="test2" name="radio-group" checked>'
+        mostrar += '                    <label for="test2" class="text-light mb-3" title="Marque se o Telefone Cadastrado não tem WhatsApp">Não</label>'
+        mostrar += '                </div>'
+        mostrar += '            </div>'
+
+        mostrar += '            <button type="submit" class="btn btn-info no-space-top mb-2" title="Enviar Cadastro">Cadastrar</button>'
+        mostrar += '        </form>'
+        mostrar += '    </div>'
+        mostrar += '</div>'
+
+        document.getElementById("loadNewsletter").innerHTML = mostrar;
+        document.getElementById("css").innerHTML = css;
+    }
+</script>
