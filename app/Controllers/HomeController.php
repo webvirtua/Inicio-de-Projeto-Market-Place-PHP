@@ -37,19 +37,6 @@ class HomeController extends Controller
         ]);
     }
 
-    /** @return \ArrayObject<string> rota página lojas */
-    public function lojas($request, $response, $args)
-    {
-        return Controller::twig()->render('lojas.twig', [
-            'meta' => [
-                'title' => 'Lojas na Galeria 44'
-            ],
-            'main' => Util::mainCall(),
-            'success' => UtilMessage::getSuccessMessage(),
-
-        ]);
-    }
-
     /** @return \ArrayObject<string> rota página cadastro */
     public function cadastro($request, $response, $args)
     {
@@ -68,32 +55,32 @@ class HomeController extends Controller
             $person = new Person();
 
             $person->setType('F');
-            $person->setName($name[0]);
-            $person->setLastName($lastName[0]);
-            $person->setCpf($cpf[0]);
-            $person->setBirth($birth[0]);
-            $person->setSex($sex[0]);
+            $person->setName(Util::sanitizeString($_POST['name']));
+            $person->setLastName(Util::sanitizeString($_POST['lastName']));
+            $person->setCpf(Util::sanitizeInt($_POST['cpf']));
+            $person->setBirth($_POST['birth']);
+            $person->setSex(Util::sanitizeString($_POST['sex']));
 
             if (!isset($_POST['newsletter']))
                 $person->setNewsletter(1);
             else
-                $person->setNewsletter($_POST['newsletter']);
+                $person->setNewsletter(Util::sanitizeInt($_POST['newsletter']));
 
             $user = new User();
 
             if (!isset($_POST['client']))
                 $user->setUserType(0);
             else
-                $user->setUserType($_POST['client']);
+                $user->setUserType(Util::sanitizeString($_POST['client']));
 
-            $user->setEmail($email[0]);
-            $user->setPassword($password[0]);
+            $user->setEmail(Util::sanitizeEmail($_POST['email']));
+            $user->setPassword($_POST['password']);
 
             $phones = new Phone();
 
-            $phones->setAreaCode($code[0]);
-            $phones->setPhone($phone[0]);
-            $phones->setWhatsApp($_POST['whats']);
+            $phones->setAreaCode(Util::sanitizeInt($_POST['code']));
+            $phones->setPhone(Util::sanitizeInt($_POST['phone']));
+            $phones->setWhatsApp(Util::sanitizeInt($_POST['whats']));
         }
 
         if (isset($_POST['cnpj'])) {
@@ -105,17 +92,17 @@ class HomeController extends Controller
             $corporation = new  Corporation();
 
             $person->setType('J');
-            $corporation->setCnpj($cnpj[0]);
-            $corporation->setSocialReason($social_reason[0]);
-            $corporation->setStateRegistration($state_registration[0]);
+            $corporation->setCnpj(Util::sanitizeInt($_POST['cnpj']));
+            $corporation->setSocialReason(Util::sanitizeString($_POST['social_reason']));
+            $corporation->setStateRegistration(Util::sanitizeString($_POST['state_registration']));
 
             if (!isset($_POST['responsible']))
                 $corporation->setResponsible(0);
             else
-                $corporation->setResponsible($_POST['responsible']);
+                $corporation->setResponsible(Util::sanitizeInt($_POST['responsible']));
         }
 
-        if (($name[1] || $lastName[1] || $email[1] || $password[1] || $passwordConfirm[1] || $birth[1] || $sex[1] || $code[1] || $phone[1] || $cnpj[1] || $social_reason[1] || $state_registration[1]) && isset($_POST['cpf'])) {
+        if (!($name || $lastName || $email || $password || $passwordConfirm || $birth || $sex || $code || $phone || $cnpj || $social_reason || $state_registration) && isset($_POST['cpf'])) {
             try {
                 $idPerson = $person->insert($person);
 
@@ -125,48 +112,47 @@ class HomeController extends Controller
                 $phones->setIdPerson($idPerson);
                 $idPhone = $phones->insert($phones);
 
-                $corporation->setIdPerson($idPerson);
-                $idCorp = $corporation->insert($corporation);
+                if (isset($_POST['cnpj'])) {
+                    $corporation->setIdPerson($idPerson);
+                    $idCorp = $corporation->insert($corporation);
+                } else {
+                    $idCorp = -1;
+                }
 
                 if ($idPerson == 0 || $idUser == 0 || $idPhone == 0 || $idCorp == 0) {
                     $person->setIdPerson($idPerson);
                     $person->delete($person);
 
-                    $corporation->setIdCorporation($idCorp);
-                    $corporation->delete($corporation);
-                } else {
-                    $log = GenericQueries::findPessoaAndCorporation($idPerson);
-
-                    foreach ($log as $row) {
-                        $idUser = $row['iduser'];
-                        $typeUser = $row['type'];
-                        $idPerson = $row['idperson'];
-                        $personName = $row['name'];
-                        $idCorporation = $row['idcorporation'];
+                    if (isset($_POST['cnpj'])) {
+                        $corporation->setIdCorporation($idCorp);
+                        $corporation->delete($corporation);
                     }
+                } else {
+                    if ($idCorp < 0)
+                        $idCorp = null;
 
-                    User::setSessionLogin($idUser, $typeUser, $idPerson, $personName, $idCorporation);
+                    User::setSessionLogin($idUser, $user->getUserType(), $idPerson, $person->getName(), $idCorp);
                 }
 
                 UtilMessage::setSuccessMessage("Cadastro realizado com sucesso!");
             } catch (\Exception $e) {
-                return  "Erro ao tentar Cadastrar: ".$e->getMessage();
+                UtilMessage::setErrorMessage("Erro ao tentar Cadastrar: ".$e->getMessage());
             }
         } else {
             $errors = [
-                'name' => $name[0],
-                'lastName' => $lastName[0],
-                'email' => $email[0],
-                'password' => $password[0],
-                'passwordConfirm' => $passwordConfirm[0],
-                'birth' => $birth[0],
-                'sex' => $sex[0],
-                'code' => $code[0],
-                'phone' => $phone[0],
-                'cpf' => $cpf[0],
-                'cnpj' => $cnpj[0],
-                'social_reason' => $social_reason[0],
-                'state_registration' => $state_registration[0]
+                'name' => $name,
+                'lastName' => $lastName,
+                'email' => $email,
+                'password' => $password,
+                'passwordConfirm' => $passwordConfirm,
+                'birth' => $birth,
+                'sex' => $sex,
+                'code' => $code,
+                'phone' => $phone,
+                'cpf' => $cpf,
+                'cnpj' => $cnpj,
+                'social_reason' => $social_reason,
+                'state_registration' => $state_registration
             ];
         }
 
@@ -177,38 +163,35 @@ class HomeController extends Controller
             $number = Validation::verifyIfInt($_POST['number']);
             $district = Validation::verifyEmpty($_POST['district']);
             $city = Validation::verifyWords($_POST['city']);
-            $company = Validation::verifyIfInt($_POST['company']);
-            $id_person = Validation::verifyIfInt($_POST['id_person']);
-            $id_corporation = Validation::verifyIfInt($_POST['id_corporation']);
 
             $addresses = new Address();
 
             if (empty($_POST['number']))
                 $addresses->setNumber(0);
             else
-                $addresses->setNumber($number[0]);
+                $addresses->setNumber(Util::sanitizeInt($_POST['number']));
 
-            $addresses->setAddressType($address[0]);
-            $addresses->setStreet($street[0]);
-            $addresses->setComplement(filter_var($_POST['complement'], FILTER_SANITIZE_STRING));
-            $addresses->setDistrict($district[0]);
-            $addresses->setCity($city[0]);
-            $addresses->setZipcode($cep[0]);
-            $addresses->setAddressAlias(filter_var($_POST['alias'], FILTER_SANITIZE_STRING));
-            $addresses->setVerifyCompany($company[0]);
-            $addresses->setIdPerson($id_person[0]);
-            $addresses->setIdCorporation($id_corporation[0]);
+            $addresses->setAddressType(Util::sanitizeString($_POST['address']));
+            $addresses->setStreet(Util::sanitizeString($_POST['street']));
+            $addresses->setComplement(Util::sanitizeString($_POST['complement']));
+            $addresses->setDistrict(Util::sanitizeString($_POST['district']));
+            $addresses->setCity(Util::sanitizeString($_POST['city']));
+            $addresses->setZipcode(Util::sanitizeInt($_POST['cep']));
+            $addresses->setAddressAlias(Util::sanitizeString($_POST['alias']));
+            $addresses->setVerifyCompany(Util::sanitizeInt($_POST['company']));
+            $addresses->setIdPerson(Util::sanitizeInt($_POST['id_person']));
+            $addresses->setIdCorporation(Util::sanitizeInt($_POST['id_corporation']));
 
-            if ($address[1] || $cep[1] || $street[1] || $number[1] || $district[1] || $city[1])
+            if (!($address || $cep || $street || $number || $district || $city))
                 $addresses->insert($addresses);
             else
                 $errors = [
-                    'address' => $address[0],
-                    'cep' => $cep[0],
-                    'street' => $street[0],
-                    'number' => $number[0],
-                    'district' => $district[0],
-                    'city' => $city[0]
+                    'address' => $address,
+                    'cep' => $cep,
+                    'street' => $street,
+                    'number' => $number,
+                    'district' => $district,
+                    'city' => $city
                 ];
         }
 
@@ -227,12 +210,12 @@ class HomeController extends Controller
             $email = Validation::verifyEmail($_POST['email']);
             $password = Validation::verifyPassword($_POST['password']);
 
-            if ($email[1] || $password[1])
-                $return = User::login($email[0], $password[0]);
+            if (!($email || $password))
+                $return = User::login($_POST['email'], $_POST['password']);
             else
                 $errors = [
-                    'email' => $email[0],
-                    'password' => $password[0]
+                    'email' => $email,
+                    'password' => $password
                 ];
         }
 
@@ -281,14 +264,14 @@ class HomeController extends Controller
             $password = Validation::verifyPassword($_POST['password']);
             $passwordConfirm = Validation::passwordConfirm($_POST['password'], $_POST['password_confirm']);
 
-            if (($password[1] || $passwordConfirm[1]) && isset($_SESSION['code'])) {
-                $user->setPassword($password[0]);
+            if (!($password || $passwordConfirm) && isset($_SESSION['code'])) {
+                $user->setPassword($_POST['password']);
                 $user->setIdUser($_SESSION['code']);
                 $user->update($user);
             } else if (!($password || $passwordConfirm)) {
                 $errors = [
-                    'password' => $password[0],
-                    'passwordConfirm' => $passwordConfirm[0]
+                    'password' => $password,
+                    'passwordConfirm' => $passwordConfirm
                 ];
             } else {
                 UtilMessage::setErrorMessage("Não foi possível recuperar a Senha!");
